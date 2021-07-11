@@ -36,10 +36,17 @@
             name = "clean-sources";
             command = ''
               mkdir -p $DEVSHELL_ROOT/sources-clean
-
               for f in $(find $DEVSHELL_ROOT/sources -type f); do
                  grep '^[^#]' $f | sort > $DEVSHELL_ROOT/sources-clean/$(basename $f)
               done
+            '';
+          }
+          {
+            name = "find-uniq-values";
+            command = ''
+              mkdir -p $DEVSHELL_ROOT/uniq-values
+              cat $DEVSHELL_ROOT/sources-clean/* | sort | uniq -u > $DEVSHELL_ROOT/uniq-values/values
+              cat $DEVSHELL_ROOT/uniq-values/values | cut -d= -f1 | sort | uniq > $DEVSHELL_ROOT/uniq-values/keys
             '';
           }
         ];
