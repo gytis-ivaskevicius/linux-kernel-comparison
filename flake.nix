@@ -49,6 +49,21 @@
               cat $DEVSHELL_ROOT/uniq/values | cut -d= -f1 | sort | uniq > $DEVSHELL_ROOT/uniq/keys
             '';
           }
+          {
+            name = "show-diffs";
+            command = ''
+              for k in $(cat $DEVSHELL_ROOT/uniq/keys); do
+                url="https://cateee.net/lkddb/web-lkddb/$(echo $k | sed 's|CONFIG_||g').html"
+                echo $url
+                ${pkgs.lynx}/bin/lynx $url -dump \
+                  | awk '/General informations/,/Hardware/' \
+                  | ${pkgs.bat}/bin/bat --pager=never --language md
+                cd $DEVSHELL_ROOT/sources
+                grep $k -r . --color=always
+                read
+              done
+            '';
+          }
         ];
 
       };
