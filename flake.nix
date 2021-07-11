@@ -44,9 +44,9 @@
           {
             name = "find-uniq-values";
             command = ''
-              mkdir -p $DEVSHELL_ROOT/uniq-values
-              cat $DEVSHELL_ROOT/sources-clean/* | sort | uniq -u > $DEVSHELL_ROOT/uniq-values/values
-              cat $DEVSHELL_ROOT/uniq-values/values | cut -d= -f1 | sort | uniq > $DEVSHELL_ROOT/uniq-values/keys
+              mkdir -p $DEVSHELL_ROOT/uniq
+              cat $DEVSHELL_ROOT/sources-clean/* | sort | uniq -u > $DEVSHELL_ROOT/uniq/values
+              cat $DEVSHELL_ROOT/uniq/values | cut -d= -f1 | sort | uniq > $DEVSHELL_ROOT/uniq/keys
             '';
           }
         ];
