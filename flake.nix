@@ -58,10 +58,18 @@
                 ${pkgs.lynx}/bin/lynx $url -dump \
                   | awk '/General informations/,/Hardware/' \
                   | ${pkgs.bat}/bin/bat --pager=never --language md
-                cd $DEVSHELL_ROOT/sources
-                grep $k -r . --color=always
+                cd $DEVSHELL_ROOT/sources-clean
+                grep $k -wr . --color=always
                 read
               done
+            '';
+          }
+          {
+            name = "update";
+            command = ''
+              fetch-kernel-configs
+              clean-sources
+              find-uniq-values
             '';
           }
         ];
